@@ -1,0 +1,4 @@
+@import "tailwindcss";
+
+/* This ensures dark mode works with class strategy */
+@custom-variant dark (&:is(.dark *));
