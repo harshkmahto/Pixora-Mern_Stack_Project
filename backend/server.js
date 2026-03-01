@@ -1,41 +1,43 @@
 const dotenv = require("dotenv");
 dotenv.config();
+
 const express = require("express");
-const cookieParser = require('cookie-parser');
-const cors = require('cors');
-const app = express();
-const port = process.env.PORT;
+const cookieParser = require("cookie-parser");
+const cors = require("cors");
 const connectToDb = require("./config/db");
+
 const authRoutes = require("./routes/auth.routes");
 const serviceRoutes = require("./routes/service.routes");
 const personalDetailRoutes = require("./routes/personalDetail.route");
 const bookingRoutes = require("./routes/booking.routes");
 
-
-// Connect to database
-connectToDb();
+const app = express();
 
 // Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-// CORS configuration
 app.use(cors({
-    origin: process.env.CLIENT_URL , // Your frontend URL
-    credentials: true, // Allow cookies to be sent
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    allowedHeaders: ['Content-Type', 'Authorization']
+  origin: true, // temporary
+  credentials: true,
 }));
 
-app.options("*", cors());
+// Connect DB per request (Vercel safe)
+app.use(async (req, res, next) => {
+  await connectToDb();
+  next();
+});
+
+// Root route
+app.get("/", (req, res) => {
+  res.json({ message: "API is running 🚀" });
+});
 
 // Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/services", serviceRoutes);
 app.use("/api/personal-details", personalDetailRoutes);
 app.use("/api/bookings", bookingRoutes);
-
-
 
 module.exports = app;
