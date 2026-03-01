@@ -4,7 +4,7 @@ const express = require("express");
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT;
 const connectToDb = require("./config/db");
 const authRoutes = require("./routes/auth.routes");
 const serviceRoutes = require("./routes/service.routes");
@@ -36,9 +36,6 @@ app.use("/api/services", serviceRoutes);
 app.use("/api/personal-details", personalDetailRoutes);
 app.use("/api/bookings", bookingRoutes);
 
-// Test route
-app.get("/", (req, res) => {
-    res.json({ message: "API is running..." });
-});
+
 
 module.exports = app;
