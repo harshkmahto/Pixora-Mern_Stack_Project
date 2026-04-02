@@ -6,6 +6,17 @@ const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const connectToDb = require("./config/db");
 
+const dns = require("dns");
+
+
+
+dns.setserver("1.1.1.1","8.8.8.8");
+
+
+
+
+
+
 const authRoutes = require("./routes/auth.routes");
 const serviceRoutes = require("./routes/service.routes");
 const personalDetailRoutes = require("./routes/personalDetail.route");

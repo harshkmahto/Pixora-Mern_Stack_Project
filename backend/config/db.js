@@ -12,16 +12,13 @@ async function connectToDb() {
   }
 
   try {
-    const db = await mongoose.connect(process.env.DB_URI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
+    const db = await mongoose.connect(process.env.DB_URI);
 
     isConnected = db.connections[0].readyState;
     console.log("Connected to MongoDB");
   } catch (error) {
     console.error("MongoDB connection failed:", error);
-    throw error; // IMPORTANT
+    process.exit(1); // stop server if DB fails
   }
 }
 
