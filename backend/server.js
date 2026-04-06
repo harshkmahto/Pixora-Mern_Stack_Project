@@ -8,21 +8,18 @@ const connectToDb = require("./config/db");
 
 const dns = require("dns");
 
-
-
-dns.setserver("1.1.1.1","8.8.8.8");
-
-
-
-
-
-
 const authRoutes = require("./routes/auth.routes");
 const serviceRoutes = require("./routes/service.routes");
 const personalDetailRoutes = require("./routes/personalDetail.route");
 const bookingRoutes = require("./routes/booking.routes");
 
 const app = express();
+
+
+dns.setserver("1.1.1.1","8.8.8.8");
+
+// Connect DB per request (Vercel safe)
+connectToDb();
 
 // Middleware
 app.use(express.json());
@@ -34,11 +31,7 @@ app.use(cors({
   credentials: true,
 }));
 
-// Connect DB per request (Vercel safe)
-app.use(async (req, res, next) => {
-  await connectToDb();
-  next();
-});
+
 
 // Root route
 app.get("/", (req, res) => {
