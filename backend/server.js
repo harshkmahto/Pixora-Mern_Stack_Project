@@ -16,7 +16,7 @@ const bookingRoutes = require("./routes/booking.routes");
 const app = express();
 
 
-dns.setserver("1.1.1.1","8.8.8.8");
+dns.setServers("1.1.1.1","8.8.8.8");
 
 // Connect DB per request (Vercel safe)
 connectToDb();
