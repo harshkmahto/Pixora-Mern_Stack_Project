@@ -29,7 +29,7 @@ async function registerUser(req, res) {
             name,
             email,
             password: hashedPassword,
-            role: role || 'user' // Default to 'user' if role not provided
+            role: role || 'user'
         });
 
         // Generate token
@@ -38,9 +38,8 @@ async function registerUser(req, res) {
         // Set cookie
         res.cookie('token', token, {
             httpOnly: true,
-            secure: process.env.NODE_ENV === 'production',
             sameSite: 'strict',
-            maxAge: 30 * 24 * 60 * 60 * 1000 // 30 days
+            maxAge: 30 * 24 * 60 * 60 * 1000 
         });
 
         res.status(201).json({
@@ -84,8 +83,6 @@ async function loginUser(req, res) {
         // Set cookie
         res.cookie('token', token, {
             httpOnly: true,
-            secure: process.env.NODE_ENV === 'production',
-            sameSite: 'strict',
             maxAge: 30 * 24 * 60 * 60 * 1000 // 30 days
         });
 
@@ -135,7 +132,7 @@ async function updateProfile(req, res) {
         if (email) updateFields.email = email;
 
         if (req.file) {
-            updateFields.profile = req.file.path; // new cloudinary image
+            updateFields.profile = req.file.path; 
         }
 
         const user = await userModel.findByIdAndUpdate(

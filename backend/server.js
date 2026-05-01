@@ -15,10 +15,10 @@ const bookingRoutes = require("./routes/booking.routes");
 
 const app = express();
 
-// ✅ FIXED: Pass an array of DNS servers
+
 dns.setServers(["1.1.1.1", "8.8.8.8"]);
 
-// Connect DB per request (Vercel safe)
+
 connectToDb();
 
 // Middleware
